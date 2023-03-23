@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import sizeService from "./sizeService";
+import sizeService from "./elementSizeService";
 
 // Get all Size
 export const getAllSize = createAsyncThunk(

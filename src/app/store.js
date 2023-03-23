@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
-// import elementColorReducer from "../features/elementColor/elementColorSlice";
-// import sizeReducer from "../features/size/sizeSlice";
-// import elementReducer from "../features/element/elementSlice";
+import elementReducer from "../features/element/elementSlice";
+import elementColorReducer from "../features/elementColor/elementColorSlice";
+import sizeReducer from "../features/elementSize/elementSizeSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    // color: elementColorReducer,
-    // size: sizeReducer,
-    // element: elementReducer,
+    element: elementReducer,
+    color: elementColorReducer,
+    size: sizeReducer,
   },
 });

@@ -5,11 +5,11 @@ import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import MainLayout from "./components/MainLayout";
 import Dashboard from "./pages/Dashboard";
+import Element from "./pages/Element";
 import ElementColor from "./pages/ElementColor";
 import ElementSize from "./pages/ElementSize";
 import Category from "./pages/Category";
 import Items from "./pages/Item";
-import Element from "./pages/Element";
 import Warehouse from "./pages/Warehouse";
 import AddProduct from "./pages/AddProduct";
 import ManageProduct from "./pages/ManageProduct";
@@ -34,10 +34,8 @@ function App() {
           <Route path="category" element={<Category />} />
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="element" element={<Element />} />
-          <Route path="element/:id" element={<Element />} />
-          <Route path="element-color/" element={<ElementColor />} />
-          <Route path="element-color/:id" element={<ElementColor />} />
-          <Route path="element/size/:id" element={<ElementSize />} />
+          <Route path="element-color" element={<ElementColor />} />
+          <Route path="element-size" element={<ElementSize />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="manage-product" element={<ManageProduct />} />
           <Route path="add-order" element={<AddOrder />} />
