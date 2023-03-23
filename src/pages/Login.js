@@ -47,10 +47,10 @@ const Login = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange("email")}
                 onBlur={formik.handleBlur("email")}
-                autocomplete="off"
+                autoComplete="off"
                 required
               />
-              <label for="">Email</label>
+              <label htmlFor="">Email</label>
             </div>
 
             <div className="inputbox">
@@ -65,13 +65,13 @@ const Login = () => {
                 onBlur={formik.handleBlur("password")}
                 required
               />
-              <label for="">Password</label>
+              <label htmlFor="">Password</label>
             </div>
 
             <div className="forget">
               <Link to="forgot-password">Forgot Password</Link>
             </div>
-            <button>Log In</button>
+            <button type="submit">Log In</button>
             <div className="register">
               <p>
                 Don't have an account <Link to="/">Register</Link>
