@@ -22,7 +22,7 @@ const Login = () => {
   });
 
   const authState = useSelector((state) => state);
-  const { user, isLoading, isError, isSuccess } = authState.auth;
+  const { user, isLoading, isError, isSuccess, message } = authState.auth;
   useEffect(() => {
     if (isSuccess) {
       navigate("admin");
@@ -33,6 +33,9 @@ const Login = () => {
 
   return (
     <section id="section">
+      <div className="error text-center">
+        {message.message === "Rejected" ? "You are not an admin" : ""}
+      </div>
       <div className="form-box">
         <div className="form-value">
           <form action="" onSubmit={formik.handleSubmit}>
@@ -47,10 +50,10 @@ const Login = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange("email")}
                 onBlur={formik.handleBlur("email")}
-                autoComplete="off"
+                autocomplete="off"
                 required
               />
-              <label htmlFor="">Email</label>
+              <label for="">Email</label>
             </div>
 
             <div className="inputbox">
@@ -65,7 +68,7 @@ const Login = () => {
                 onBlur={formik.handleBlur("password")}
                 required
               />
-              <label htmlFor="">Password</label>
+              <label for="">Password</label>
             </div>
 
             <div className="forget">
