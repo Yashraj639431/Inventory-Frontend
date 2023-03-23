@@ -153,7 +153,7 @@ const MainLayout = () => {
           ]}
         />
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout position-relative">
         <Header>
           {React.createElement(
             collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
@@ -162,8 +162,9 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
+          <hr />
         </Header>
-        <Content
+        <Content className="dashboard-main-content"
           style={{
             padding: "24px",
             minHeight: 280,

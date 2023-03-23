@@ -32,7 +32,7 @@ const Login = () => {
   }, [user, isLoading, isError, isSuccess, navigate]);
 
   return (
-    <section id="section">
+    <section id="login-section">
       <div className="error text-center">
         {message.message === "Rejected" ? "You are not an admin" : ""}
       </div>

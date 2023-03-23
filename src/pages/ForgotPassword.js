@@ -3,7 +3,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 
 const ForgotPassword = () => {
   return (
-    <section id="section">
+    <section id="login-section">
       <div className="form-box">
         <div className="form-value">
           <form action="">
