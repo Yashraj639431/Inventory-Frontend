@@ -7,7 +7,7 @@ const ResetPassword = () => {
       <div className="form-box">
         <div className="form-value">
           <form action="">
-            <h3 className="text-center title">Reset Password</h3>
+            <h3 className="text-center title text-white">Reset Password</h3>
             <p className="text-center">Please enter your new password</p>
             <div className="inputbox">
               <RiLockPasswordLine className="ion-icon" />

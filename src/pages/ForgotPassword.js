@@ -7,7 +7,7 @@ const ForgotPassword = () => {
       <div className="form-box">
         <div className="form-value">
           <form action="">
-            <h3 className="text-center title">Forgot Password</h3>
+            <h3 className="text-center title text-white">Forgot Password</h3>
             <p className="text-center">Please enter your email to get reset password mail.</p>
             <div className="inputbox w-100">
               <RiLockPasswordLine className="ion-icon" />
