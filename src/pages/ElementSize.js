@@ -31,6 +31,7 @@ const columns = [
 const ElementColor = () => {
   const [open, setOpen] = useState(false);
   const [sizeId, setsizeId] = useState("");
+  const [search, setSearch] = useState("");
 
   const showModal = (e) => {
     setOpen(true);
@@ -46,12 +47,20 @@ const ElementColor = () => {
     dispatch(getAllSize());
   }, [dispatch]);
   const sizeState = useSelector((state) => state.size.size);
+  const filterData = sizeState.filter((el) => {
+    if (search === "") {
+      return el;
+    } else {
+      return el.title.toLowerCase().includes(search);
+    }
+  });
+
   const data1 = [];
-  for (let i = 0; i < sizeState.length; i++) {
+  for (let i = 0; i < filterData.length; i++) {
     data1.push({
-      key: i +1,
-      title: sizeState[i].title,
-      status: sizeState[i].status,
+      key: i + 1,
+      title: filterData[i].title,
+      status: filterData[i].status,
       action: (
         <>
           <Link to="" className="fs-4">
@@ -59,7 +68,7 @@ const ElementColor = () => {
           </Link>
           <button
             className="ms-3 text-danger fs-4 bg-transparent border-0"
-            onClick={() => showModal(sizeState[i]._id)}
+            onClick={() => showModal(filterData[i]._id)}
           >
             <AiOutlineDelete />
           </button>
@@ -81,13 +90,41 @@ const ElementColor = () => {
         <section className="breadcrumb-header">
           <h1>Sizes</h1>
           <BreadCrum className="breadcrum" title="Sizes" />
+          <button type="button" className="btn btn-outline-primary my-2">
+            Add Sizes
+          </button>
         </section>
-        <section>
-          <div>
-            <h3 className="mb-4 title">Element Size</h3>
-            <div>
-              <Table columns={columns} dataSource={data1} />
+        <section id="main-element-box">
+          <div className="main-content">
+            <div className="print-buttons m-3">
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Copy
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                CSV
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Excel
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Print
+              </button>
             </div>
+            <div className="input-group">
+              <div className="form-outline">
+                <input
+                  type="search"
+                  id="form1"
+                  className="form-control"
+                  placeholder="Search"
+                  onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                />
+              </div>
+              <button type="button" className="search-btn btn btn-primary">
+                <i className="fas fa-search"></i>
+              </button>
+            </div>
+            <Table columns={columns} dataSource={data1} />
             <CustomModal
               hideModal={hideModal}
               open={open}
