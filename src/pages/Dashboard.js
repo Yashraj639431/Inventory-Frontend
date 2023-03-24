@@ -4,18 +4,14 @@ import { Link } from "react-router-dom";
 import axios from "axios"
 const Dashboard = () => {
   const [elemCount, setElemCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const fetchData = async () => {
     try {
-      setIsLoading(true);
       const url = `http://localhost:5000/api/count`
       const res = await axios.get(url);
       setElemCount(res.data);
-      setIsLoading(false);
       
     } catch (err) {
-      setError(true);
+      throw new Error(err)
     }
   }
   console.log(elemCount);
