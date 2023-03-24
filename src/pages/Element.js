@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { AiOutlineDelete, AiFillFileAdd } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
 import {
   getElements,
   deleteElements,
@@ -38,13 +37,10 @@ const columns = [
 ];
 
 const ElementColor = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const [elementId, setelementId] = useState("");
-
-  const getElementId = location.pathname.split("/")[3];
-  console.log(getElementId)
 
   const showModal = (e) => {
     setOpen(true);
@@ -60,16 +56,22 @@ const ElementColor = () => {
     dispatch(getElements());
   }, [dispatch]);
   const elementState = useSelector((state) => state.element.elements);
-  console.log(elementState.length)
+  const filterData = elementState.filter((el) => {
+    if (search === "") {
+      return el;
+    } else {
+      return el.title.toLowerCase().includes(search);
+    }
+  });
   const data1 = [];
-  for (let i = 0; i < elementState.length; i++) {
+  for (let i = 0; i < filterData.length; i++) {
     data1.push({
       key: i + 1,
-      title: elementState[i].title,
+      title: filterData[i].title,
       status: (
         <div
           style={
-            elementState[i].status === "Inactive"
+            filterData[i].status === "Inactive"
               ? {
                   backgroundColor: "#EBB02D",
                 }
@@ -77,24 +79,25 @@ const ElementColor = () => {
           }
           className=" text-white p-1 rounded"
         >
-          {elementState[i].status}
+          {filterData[i].status}
         </div>
       ),
       action: (
         <>
-          <div className="fs-icons">
+          <div className="fs-icons fs-4">
             <Link
-              to={`/admin/element-${elementState[i].title.toLowerCase()}/`}
+              to={`/admin/element-${filterData[i].title.toLowerCase()}/`}
               className="text-dark fs-4 bg-transparent border-0 px-4"
             >
               <AiFillFileAdd />
             </Link>
-            <Link to={`/admin/element/${elementState[i]._id}`}>
-                <BiEdit />
+            {/* <Link to={`/admin/element/${filterData[i]._id}`}> */}
+            <Link to="/admin/element">
+              <BiEdit />
             </Link>
             <button
               className="ms-3 text-danger fs-4 bg-transparent border-0"
-              onClick={() => showModal(elementState[i]._id)}
+              onClick={() => showModal(filterData[i]._id)}
             >
               <AiOutlineDelete />
             </button>
@@ -115,15 +118,44 @@ const ElementColor = () => {
   return (
     <>
       <div className="dashboard-layout">
-        <section className="breadcrumb-header">
-          <h1>Elements</h1>
+        <section className="breadcrumb-header mb-4">
+          <h1>Manage Elements</h1>
           <BreadCrum className="breadcrum" title="Elements" />
+          <button type="button" className="btn btn-outline-primary my-2">
+            Add Elements
+          </button>
         </section>
-        <section>
-          <div>
-            <div>
-              <Table columns={columns} dataSource={data1} />
+        <section id="main-element-box">
+          <div className="main-content">
+            <div className="print-buttons m-3">
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Copy
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                CSV
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Excel
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Print
+              </button>
             </div>
+            <div className="input-group">
+              <div className="form-outline">
+                <input
+                  type="search"
+                  id="form1"
+                  className="form-control"
+                  placeholder="Search"
+                  onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                />
+              </div>
+              <button type="button" className="search-btn btn btn-primary">
+                <i className="fas fa-search"></i>
+              </button>
+            </div>
+            <Table columns={columns} dataSource={data1} />
             <CustomModal
               hideModal={hideModal}
               open={open}

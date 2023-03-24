@@ -6,12 +6,8 @@ import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
-  createColors,
   getColors,
-  updateColors,
-  getAColors,
   deleteColors,
   resetState,
 } from "../features/elementColor/elementColorSlice";
@@ -33,16 +29,9 @@ const columns = [
 ];
 
 const ElementColor = () => {
-  // const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [colorId, setcolorId] = useState("");
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const getcolorId = location.pathname.split("/")[3];
-  console.log(getcolorId)
-
-
+  const [search, setSearch] = useState("");
 
   const showModal = (e) => {
     setOpen(true);
@@ -58,20 +47,27 @@ const ElementColor = () => {
     dispatch(getColors());
   }, [dispatch]);
   const colorState = useSelector((state) => state.color.colors);
+  const filterData = colorState.filter((el) => {
+    if (search === "") {
+      return el;
+    } else {
+      return el.title.toLowerCase().includes(search);
+    }
+  });
   const data1 = [];
-  for (let i = 0; i < colorState.length; i++) {
+  for (let i = 0; i < filterData.length; i++) {
     data1.push({
       key: i + 1,
-      title: colorState[i].title,
-      status: colorState[i].status,
+      title: filterData[i].title,
+      status: filterData[i].status,
       action: (
         <>
-          <Link to={`/admin/element/${colorState[i]._id}`} className="fs-4">
+          <Link to={`/admin/element/${filterData[i]._id}`} className="fs-4">
             <BiEdit />
           </Link>
           <button
             className="ms-3 text-danger fs-4 bg-transparent border-0"
-            onClick={() => showModal(colorState[i]._id)}
+            onClick={() => showModal(filterData[i]._id)}
           >
             <AiOutlineDelete />
           </button>
@@ -93,13 +89,41 @@ const ElementColor = () => {
         <section className="breadcrumb-header">
           <h1>Colors</h1>
           <BreadCrum className="breadcrum" title="Colors" />
+          <button type="button" className="btn btn-outline-primary my-2">
+            Add Colors
+          </button>
         </section>
-        <section>
-          <div>
-            <h3 className="mb-4 title">Element Colors</h3>
-            <div>
-              <Table columns={columns} dataSource={data1} />
+        <section id="main-element-box">
+          <div className="main-content">
+            <div className="print-buttons m-3">
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Copy
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                CSV
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Excel
+              </button>
+              <button className="btn btn-secondary btn-sm px-3 me-2">
+                Print
+              </button>
             </div>
+            <div className="input-group">
+              <div className="form-outline">
+                <input
+                  type="search"
+                  id="form1"
+                  className="form-control"
+                  placeholder="Search"
+                  onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                />
+              </div>
+              <button type="button" className="search-btn btn btn-primary">
+                <i className="fas fa-search"></i>
+              </button>
+            </div>
+            <Table columns={columns} dataSource={data1} />
             <CustomModal
               hideModal={hideModal}
               open={open}

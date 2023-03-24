@@ -602,14 +602,16 @@ th.ant-table-cell:nth-child(5){
   right: 0px;
   font-size: 12px;
 }
+#main-element-box{
+  background-color: rgba(209, 221, 221, 0.4);
+}
+.input-group{
+  padding-left: 965px;
+  margin-bottom: 25px;
+}
 /* .btn-edit:hover {
   background-color: #dedede;
 } */
-.btn-edit{
-  color: blue;
-  background-color: white;
-  border: none;
-}
 /*********************************
 Elements Page End Here
 *********************************/
