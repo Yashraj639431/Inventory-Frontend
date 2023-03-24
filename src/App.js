@@ -20,6 +20,7 @@ import ManageMember from "./pages/ManageMember";
 import AddPermission from "./pages/AddPermission";
 import ManagePermission from "./pages/ManagePermission";
 import Company from "./pages/Company";
+import PopModal from "./components/PopModal";
 
 function App() {
   return (
@@ -31,9 +32,11 @@ function App() {
         <Route path="admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="item" element={<Items />} />
+          <Route path="modal" element={<PopModal />} />
           <Route path="category" element={<Category />} />
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="element" element={<Element />} />
+          <Route path="element/:id" element={<Element />} />
           <Route path="element-color" element={<ElementColor />} />
           <Route path="element-size" element={<ElementSize />} />
           <Route path="add-product" element={<AddProduct />} />

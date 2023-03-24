@@ -5,7 +5,8 @@ import BreadCrum from "../components/BreadCrum";
 import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiFillFileAdd } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 import {
   getElements,
   deleteElements,
@@ -14,13 +15,17 @@ import {
 
 const columns = [
   {
-    title: "title",
+    title: "SNo.",
+    dataIndex: "key",
+  },
+  {
+    title: "Elements",
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
     title: "Total Value",
-    dataIndex: ""
+    dataIndex: "total",
   },
   {
     title: "Status",
@@ -33,8 +38,13 @@ const columns = [
 ];
 
 const ElementColor = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [elementId, setelementId] = useState("");
+
+  const getElementId = location.pathname.split("/")[3];
+  console.log(getElementId)
 
   const showModal = (e) => {
     setOpen(true);
@@ -44,28 +54,51 @@ const ElementColor = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getElements());
   }, [dispatch]);
   const elementState = useSelector((state) => state.element.elements);
+  console.log(elementState.length)
   const data1 = [];
   for (let i = 0; i < elementState.length; i++) {
     data1.push({
+      key: i + 1,
       title: elementState[i].title,
-      status: elementState[i].status,
+      status: (
+        <div
+          style={
+            elementState[i].status === "Inactive"
+              ? {
+                  backgroundColor: "#EBB02D",
+                }
+              : { backgroundColor: "#245953" }
+          }
+          className=" text-white p-1 rounded"
+        >
+          {elementState[i].status}
+        </div>
+      ),
       action: (
         <>
-          <Link to={`/admin/element-${elementState[i].title.toLowerCase()}/`} className="fs-4">
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 text-danger fs-4 bg-transparent border-0"
-            onClick={() => showModal(elementState[i]._id)}
-          >
-            <AiOutlineDelete />
-          </button>
+          <div className="fs-icons">
+            <Link
+              to={`/admin/element-${elementState[i].title.toLowerCase()}/`}
+              className="text-dark fs-4 bg-transparent border-0 px-4"
+            >
+              <AiFillFileAdd />
+            </Link>
+            <Link to={`/admin/element/${elementState[i]._id}`}>
+                <BiEdit />
+            </Link>
+            <button
+              className="ms-3 text-danger fs-4 bg-transparent border-0"
+              onClick={() => showModal(elementState[i]._id)}
+            >
+              <AiOutlineDelete />
+            </button>
+          </div>
         </>
       ),
     });
@@ -88,7 +121,6 @@ const ElementColor = () => {
         </section>
         <section>
           <div>
-            <h3 className="mb-4 title">Element Color</h3>
             <div>
               <Table columns={columns} dataSource={data1} />
             </div>

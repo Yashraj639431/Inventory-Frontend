@@ -113,7 +113,8 @@ export const elementSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.colorName = action.payload.title;
+        state.elementName = action.payload.title;
+        state.elementStatus = action.payload.status;
       })
       .addCase(getAEements.rejected, (state, action) => {
         state.isLoading = false;

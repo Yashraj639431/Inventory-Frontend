@@ -1,8 +1,27 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import BreadCrum from "../components/BreadCrum";
 import { Link } from "react-router-dom";
-
+import axios from "axios"
 const Dashboard = () => {
+  const [elemCount, setElemCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const url = `http://localhost:5000/api/count`
+      const res = await axios.get(url);
+      setElemCount(res.data);
+      setIsLoading(false);
+      
+    } catch (err) {
+      setError(true);
+    }
+  }
+  console.log(elemCount);
+  useEffect(() => {
+    fetchData();
+  }, [])
   return (
     <>
       <div className="dashboard-layout">
@@ -49,7 +68,7 @@ const Dashboard = () => {
             <div className="box col-lg-3 col-xs-6">
               <div className="custom-img small-box bg-yellow">
                 <div className="inner">
-                  <h3>0</h3>
+                  <h3>{elemCount}</h3>
                   <h4>
                     <b>Total Elements </b>
                   </h4>

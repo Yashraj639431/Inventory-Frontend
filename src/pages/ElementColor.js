@@ -6,13 +6,21 @@ import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
+  createColors,
   getColors,
+  updateColors,
+  getAColors,
   deleteColors,
   resetState,
 } from "../features/elementColor/elementColorSlice";
 
 const columns = [
+  {
+    title: "SNo.",
+    dataIndex: "key",
+  },
   {
     title: "Elements Value",
     dataIndex: "title",
@@ -25,8 +33,16 @@ const columns = [
 ];
 
 const ElementColor = () => {
+  // const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [colorId, setcolorId] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const getcolorId = location.pathname.split("/")[3];
+  console.log(getcolorId)
+
+
 
   const showModal = (e) => {
     setOpen(true);
@@ -45,11 +61,12 @@ const ElementColor = () => {
   const data1 = [];
   for (let i = 0; i < colorState.length; i++) {
     data1.push({
+      key: i + 1,
       title: colorState[i].title,
       status: colorState[i].status,
       action: (
         <>
-          <Link to="" className="fs-4">
+          <Link to={`/admin/element/${colorState[i]._id}`} className="fs-4">
             <BiEdit />
           </Link>
           <button

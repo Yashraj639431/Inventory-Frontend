@@ -14,6 +14,10 @@ import {
 
 const columns = [
   {
+    title: "SNo.",
+    dataIndex: "key",
+  },
+  {
     title: "Elements Value",
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
@@ -45,6 +49,7 @@ const ElementColor = () => {
   const data1 = [];
   for (let i = 0; i < sizeState.length; i++) {
     data1.push({
+      key: i +1,
       title: sizeState[i].title,
       status: sizeState[i].status,
       action: (

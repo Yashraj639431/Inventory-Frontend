@@ -566,7 +566,50 @@ Dashboard Page End Here
 /*********************************
 Element Page Start Here
 *********************************/
-
+th.ant-table-cell:nth-child(1){
+  text-align: center !important;
+}
+th.ant-table-cell:nth-child(2){
+  text-align: center !important;
+}
+th.ant-table-cell:nth-child(3){
+  text-align: center !important;
+}
+th.ant-table-cell:nth-child(4){
+  text-align: center !important;
+}
+th.ant-table-cell:nth-child(5){
+  text-align: center !important;
+}
+.ant-table-cell{
+  text-align: center;
+}
+.modal-content{
+  position: relative;
+  height: 62vh;
+}
+.btn-modal:nth-child(2n+1){
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  right: 120px;
+  font-size: 12px;
+}
+.btn-modal:nth-child(2n+2){
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  right: 0px;
+  font-size: 12px;
+}
+/* .btn-edit:hover {
+  background-color: #dedede;
+} */
+.btn-edit{
+  color: blue;
+  background-color: white;
+  border: none;
+}
 /*********************************
-Dashboard Page End Here
+Elements Page End Here
 *********************************/
