@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrum from "../components/BreadCrum";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { useFormik } from "formik";
@@ -42,6 +42,7 @@ const columns = [
 
 const ElementColor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -157,6 +158,8 @@ const ElementColor = () => {
       if (getElementId !== undefined) {
         const data = { id: getElementId, elementData: values };
         dispatch(updateElements(data));
+        navigate("/admin/element");
+        window.location.reload(false);
       } else {
         dispatch(createElements(values));
         window.location.reload(false);
@@ -248,11 +251,11 @@ const ElementColor = () => {
                   </div>
                   <div className="modal-body">
                     <form action="" onSubmit={formik.handleSubmit}>
-                      <label htmlFor="" className="fs-4 w-100">
+                      <label htmlFor="" className="fs-4 w-100 mb-2">
                         Elements Name
                       </label>
                       <input
-                        className="form-control w-100 mt-2 fs-6"
+                        className="form-control w-100 fs-6"
                         type="text"
                         placeholder="Enter elements value"
                         id="title"
@@ -261,13 +264,13 @@ const ElementColor = () => {
                         onBlur={formik.handleBlur("title")}
                         value={formik.values.title}
                       />
-                      <label htmlFor="" className="fs-4 w-100 mt-3">
+                      <label htmlFor="" className="fs-4 w-100 mt-3 mb-2">
                         Status
                       </label>
                       <select
                         name="status"
                         id="status"
-                        className="form-control py-3 mb-3"
+                        className="form-control mb-3 fs-6"
                         onBlur={formik.handleBlur("status")}
                         onChange={formik.handleChange("status")}
                         value={formik.values.status}
