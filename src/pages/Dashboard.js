@@ -1,22 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import BreadCrum from "../components/BreadCrum";
 import { Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 const Dashboard = () => {
   const [elemCount, setElemCount] = useState(0);
   const fetchData = async () => {
     try {
-      const url = `http://localhost:5000/api/count`
+      const url = `http://localhost:5000/api/count`;
       const res = await axios.get(url);
       setElemCount(res.data);
-      
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
-  }
+  };
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
   return (
     <>
       <div className="dashboard-layout">

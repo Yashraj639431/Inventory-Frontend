@@ -7,6 +7,7 @@ import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { useFormik } from "formik";
 import { AiOutlineDelete, AiFillFileAdd } from "react-icons/ai";
+import axios from "axios";
 import {
   createElements,
   updateElements,
@@ -48,6 +49,20 @@ const ElementColor = () => {
   const [search, setSearch] = useState("");
   const [elementId, setelementId] = useState("");
 
+  const [colCount, setcolCount] = useState(0);
+  const fetchData = async () => {
+    try {
+      const url = `http://localhost:5000/api/count`;
+      const res = await axios.get(url);
+      setcolCount(res.data);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const getElementId = location.pathname.split("/")[3];
   useEffect(() => {
     if (getElementId !== undefined) {
@@ -75,6 +90,7 @@ const ElementColor = () => {
   }, [dispatch]);
 
   const elementState = useSelector((state) => state.element.elements);
+
   const filterData = elementState.filter((el) => {
     if (search === "") {
       return el;
