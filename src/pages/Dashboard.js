@@ -14,7 +14,6 @@ const Dashboard = () => {
       throw new Error(err)
     }
   }
-  console.log(elemCount);
   useEffect(() => {
     fetchData();
   }, [])

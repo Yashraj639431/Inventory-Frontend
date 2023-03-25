@@ -40,9 +40,9 @@ export const getAEements = createAsyncThunk(
 // Update a Element
 export const updateElements = createAsyncThunk(
   "element/update-element",
-  async (element, thunkAPI) => {
+  async (elementData, thunkAPI) => {
     try {
-      return await elementService.updateElement(updateElements);
+      return await elementService.updateElement(elementData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrum from "../components/BreadCrum";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
+import { useFormik } from "formik";
 import { AiOutlineDelete, AiFillFileAdd } from "react-icons/ai";
 import {
+  createElements,
+  updateElements,
+  getAEements,
   getElements,
   deleteElements,
   resetState,
@@ -38,9 +42,22 @@ const columns = [
 
 const ElementColor = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [elementId, setelementId] = useState("");
+
+  const getElementId = location.pathname.split("/")[3];
+  useEffect(() => {
+    if (getElementId !== undefined) {
+      dispatch(getAEements(getElementId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getElementId, dispatch]);
+
+  const newElement = useSelector((state) => state.element);
+  const { elementName, elementStatus } = newElement;
 
   const showModal = (e) => {
     setOpen(true);
@@ -55,6 +72,7 @@ const ElementColor = () => {
     dispatch(resetState());
     dispatch(getElements());
   }, [dispatch]);
+
   const elementState = useSelector((state) => state.element.elements);
   const filterData = elementState.filter((el) => {
     if (search === "") {
@@ -91,9 +109,15 @@ const ElementColor = () => {
             >
               <AiFillFileAdd />
             </Link>
-            {/* <Link to={`/admin/element/${filterData[i]._id}`}> */}
-            <Link to="/admin/element">
-              <BiEdit />
+            <Link to={`/admin/element/${filterData[i]._id}`}>
+              <button
+                type="button"
+                className="btn btn-outline-primary my-2"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <BiEdit />
+              </button>
             </Link>
             <button
               className="ms-3 text-danger fs-4 bg-transparent border-0"
@@ -107,6 +131,14 @@ const ElementColor = () => {
     });
   }
 
+  useEffect(() => {
+    if (getElementId !== undefined) {
+      dispatch(getAEements(getElementId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getElementId, dispatch]);
+
   const deleteElement = (e) => {
     dispatch(deleteElements(e));
     setOpen(false);
@@ -115,16 +147,41 @@ const ElementColor = () => {
     }, 100);
   };
 
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      title: elementName,
+      status: elementStatus,
+    },
+    onSubmit: (values) => {
+      if (getElementId !== undefined) {
+        const data = { id: getElementId, elementData: values };
+        dispatch(updateElements(data));
+      } else {
+        dispatch(createElements(values));
+        window.location.reload(false);
+      }
+    },
+  });
+
   return (
     <>
       <div className="dashboard-layout">
         <section className="breadcrumb-header mb-4">
           <h1>Manage Elements</h1>
           <BreadCrum className="breadcrum" title="Elements" />
-          <button type="button" className="btn btn-outline-primary my-2">
-            Add Elements
-          </button>
+          <Link to="/admin/element">
+            <button
+              type="button"
+              className="btn btn-outline-primary my-2"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Add Elements
+            </button>
+          </Link>
         </section>
+
         <section id="main-element-box">
           <div className="main-content">
             <div className="print-buttons m-3">
@@ -156,12 +213,87 @@ const ElementColor = () => {
               </button>
             </div>
             <Table columns={columns} dataSource={data1} />
+
             <CustomModal
               hideModal={hideModal}
               open={open}
               performAction={() => deleteElement(elementId)}
               title="Ary you Sure you want to delete this Element ?"
             />
+          </div>
+
+          <div className="create-element">
+            <div
+              style={{ height: "55vh" }}
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog position-relative">
+                <div className="modal-content" style={{ height: "55vh" }}>
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      {getElementId !== undefined
+                        ? "Update Elements"
+                        : "Add Elements"}
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <form action="" onSubmit={formik.handleSubmit}>
+                      <label htmlFor="" className="fs-4 w-100">
+                        Elements Name
+                      </label>
+                      <input
+                        className="form-control w-100 mt-2 fs-6"
+                        type="text"
+                        placeholder="Enter elements value"
+                        id="title"
+                        name="title"
+                        onChange={formik.handleChange("title")}
+                        onBlur={formik.handleBlur("title")}
+                        value={formik.values.title}
+                      />
+                      <label htmlFor="" className="fs-4 w-100 mt-3">
+                        Status
+                      </label>
+                      <select
+                        name="status"
+                        id="status"
+                        className="form-control py-3 mb-3"
+                        onBlur={formik.handleBlur("status")}
+                        onChange={formik.handleChange("status")}
+                        value={formik.values.status}
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                      </select>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        data-bs-dismiss="modal"
+                        className="btn btn-primary"
+                      >
+                        {getElementId !== undefined ? "Update" : "Add"}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>

@@ -36,6 +36,7 @@ function App() {
           <Route path="category" element={<Category />} />
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="element" element={<Element />} />
+          <Route path="element/:id" element={<Element />} />
           <Route path="element-color" element={<ElementColor />} />
           <Route path="element-size" element={<ElementSize />} />
           <Route path="add-product" element={<AddProduct />} />

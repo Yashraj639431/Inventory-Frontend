@@ -24,7 +24,7 @@ const getAElement = async (id) => {
 const updateElement = async (element) => {
   const response = await axios.put(
     `${base_url}element/${element.id}`,
-    { status: element.elementData },
+    { title: element.elementData.title, status: element.elementData.status },
     config
   );
   return response.data;
