@@ -7,10 +7,10 @@ import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import {
-  getAllSize,
-  deleteSizes,
-  resetState,
-} from "../features/elementSize/elementSizeSlice";
+  getValues,
+  deleteValues,
+  resetState
+} from "../features/elementValue/elementValueSlice";
 
 const columns = [
   {
@@ -30,12 +30,12 @@ const columns = [
 
 const ElementColor = () => {
   const [open, setOpen] = useState(false);
-  const [sizeId, setsizeId] = useState("");
+  const [valueId, setvalueId] = useState("");
   const [search, setSearch] = useState("");
 
   const showModal = (e) => {
     setOpen(true);
-    setsizeId(e);
+    setvalueId(e);
   };
 
   const hideModal = () => {
@@ -44,26 +44,25 @@ const ElementColor = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getAllSize());
+    dispatch(getValues());
   }, [dispatch]);
-  const sizeState = useSelector((state) => state.size.size);
-  const filterData = sizeState.filter((el) => {
+
+  const valueState = useSelector((state) => state.value.values);
+  const filterData = valueState.filter((el) => {
     if (search === "") {
       return el;
     } else {
       return el.title.toLowerCase().includes(search);
     }
   });
-
   const data1 = [];
   for (let i = 0; i < filterData.length; i++) {
     data1.push({
       key: i + 1,
       title: filterData[i].title,
-      status: filterData[i].status,
       action: (
         <>
-          <Link to="" className="fs-4">
+          <Link to={`/admin/${filterData[i]._id}`} className="fs-4">
             <BiEdit />
           </Link>
           <button
@@ -77,23 +76,24 @@ const ElementColor = () => {
     });
   }
 
-  const deleteSize = (e) => {
-    dispatch(deleteSizes(e));
+  const deleteValue = (e) => {
+    dispatch(deleteValues(e));
     setOpen(false);
     setTimeout(() => {
-      dispatch(getAllSize());
+      dispatch(getValues());
     }, 100);
   };
   return (
     <>
       <div className="dashboard-layout">
         <section className="breadcrumb-header">
-          <h1>Sizes</h1>
-          <BreadCrum className="breadcrum" title="Sizes" />
+          <h1>Value</h1>
+          <BreadCrum className="breadcrum" title="Values" />
           <button type="button" className="btn btn-outline-primary my-2">
-            Add Sizes
+            Add Colors
           </button>
         </section>
+
         <section id="main-element-box">
           <div className="main-content">
             <div className="print-buttons m-3">
@@ -128,8 +128,8 @@ const ElementColor = () => {
             <CustomModal
               hideModal={hideModal}
               open={open}
-              performAction={() => deleteSize(sizeId)}
-              title="Ary you Sure you want to delete this Size ?"
+              performAction={() => deleteValue(valueId)}
+              title="Ary you Sure you want to delete this Value ?"
             />
           </div>
         </section>

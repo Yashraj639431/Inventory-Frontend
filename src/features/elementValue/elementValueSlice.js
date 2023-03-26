@@ -1,151 +1,150 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import sizeService from "./elementSizeService";
+import valueService from "./elementValueService";
 
-// Get all Size
-export const getAllSize = createAsyncThunk(
-  "size/get-size",
-  async (thunkAPI) => {
+// Get all Value
+export const getValues = createAsyncThunk(
+  "value/get-values",
+  async (id,thunkAPI) => {
     try {
-      return await sizeService.getSize();  
+      return await valueService.getValue(id);  
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Create a Size
-export const createSizes = createAsyncThunk(
-  "size/create-sizes",
-  async (sizeData, thunkAPI) => {
+// Create a Value
+export const createValues = createAsyncThunk(
+  "value/create-value",
+  async (valueData, thunkAPI) => {
     try {
-      return await sizeService.createSize(sizeData);
+      return await valueService.createValue(valueData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Get a Size
-export const getASize = createAsyncThunk(
-  "size/get-asize",
+// Get a Value
+export const getAValues = createAsyncThunk(
+  "value/get-aValue",
   async (id, thunkAPI) => {
     try {
-      return await sizeService.getASize(id);
+      return await valueService.getAValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Update a Size
-export const updateSize = createAsyncThunk(
-  "color/update-colors",
-  async (size, thunkAPI) => {
+// Update a Value
+export const updateValues = createAsyncThunk(
+  "updateValues/update-value",
+  async (value, thunkAPI) => {
     try {
-      return await sizeService.updateSize(size);
+      return await valueService.updateValue(value);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Delete a Size
-export const deleteSizes = createAsyncThunk(
-  "color/delete-colors",
+// Delete a Value
+export const deleteValues = createAsyncThunk(
+  "value/delete-value",
   async (id, thunkAPI) => {
     try {
-      return await sizeService.deleteSize(id);
+      return await valueService.deleteValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 export const resetState = createAction("Reset_All");
 const initialState = {
-  size: [],
+  values: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 
-export const sizeSlice = createSlice({
-  name: "sizes",
+export const elementColorSlice = createSlice({
+  name: "values",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllSize.pending, (state) => {
+      .addCase(getValues.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllSize.fulfilled, (state, action) => {
+      .addCase(getValues.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.size = action.payload;
+        state.values = action.payload;
       })
-      .addCase(getAllSize.rejected, (state, action) => {
+      .addCase(getValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createSizes.pending, (state) => {
+      .addCase(createValues.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createSizes.fulfilled, (state, action) => {
+      .addCase(createValues.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createdSize = action.payload;
+        state.createdColor = action.payload;
       })
-      .addCase(createSizes.rejected, (state, action) => {
+      .addCase(createValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(getASize.pending, (state) => {
+      .addCase(getAValues.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getASize.fulfilled, (state, action) => {
+      .addCase(getAValues.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.sizeName = action.payload.title;
+        state.colorName = action.payload.title;
       })
-      .addCase(getASize.rejected, (state, action) => {
+      .addCase(getAValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(updateSize.pending, (state) => {
+      .addCase(updateValues.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateSize.fulfilled, (state, action) => {
+      .addCase(updateValues.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedSize = action.payload;
+        state.updatedColor = action.payload;
       })
-      .addCase(updateSize.rejected, (state, action) => {
+      .addCase(updateValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(deleteSizes.pending, (state) => {
+      .addCase(deleteValues.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteSizes.fulfilled, (state, action) => {
+      .addCase(deleteValues.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.deletedSize = action.payload;
+        state.deletedValue = action.payload;
       })
-      .addCase(deleteSizes.rejected, (state, action) => {
+      .addCase(deleteValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -155,4 +154,4 @@ export const sizeSlice = createSlice({
   },
 });
 
-export default sizeSlice.reducer;
+export default elementColorSlice.reducer;

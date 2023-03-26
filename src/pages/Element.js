@@ -7,7 +7,6 @@ import CustomModal from "../components/CustomModal";
 import { BiEdit } from "react-icons/bi";
 import { useFormik } from "formik";
 import { AiOutlineDelete, AiFillFileAdd } from "react-icons/ai";
-import axios from "axios";
 import {
   createElements,
   updateElements,
@@ -41,28 +40,13 @@ const columns = [
   },
 ];
 
-const ElementColor = () => {
+const ElementColor = ({ element }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [elementId, setelementId] = useState("");
-
-  const [colCount, setcolCount] = useState(0);
-  const fetchData = async () => {
-    try {
-      const url = `http://localhost:5000/api/count`;
-      const res = await axios.get(url);
-      setcolCount(res.data);
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const getElementId = location.pathname.split("/")[3];
   useEffect(() => {
     if (getElementId !== undefined) {
@@ -74,23 +58,22 @@ const ElementColor = () => {
 
   const newElement = useSelector((state) => state.element);
   const { elementName, elementStatus } = newElement;
-
+  
   const showModal = (e) => {
     setOpen(true);
     setelementId(e);
   };
-
+  
   const hideModal = () => {
     setOpen(false);
   };
-
+  
   useEffect(() => {
     dispatch(resetState());
     dispatch(getElements());
   }, [dispatch]);
-
+  
   const elementState = useSelector((state) => state.element.elements);
-
   const filterData = elementState.filter((el) => {
     if (search === "") {
       return el;
@@ -120,12 +103,14 @@ const ElementColor = () => {
       action: (
         <>
           <div className="fs-icons fs-4">
-            <Link
-              to={`/admin/element-${filterData[i].title.toLowerCase()}/`}
-              className="text-dark fs-4 bg-transparent border-0 px-4"
-            >
-              <AiFillFileAdd />
-            </Link>
+              <Link
+                // to=""
+                to={`/admin/value/${filterData[i]._id}`}
+                className="text-dark fs-4 bg-transparent border-0 px-4"
+              >
+                <AiFillFileAdd /> 
+              </Link>
+
             <Link to={`/admin/element/${filterData[i]._id}`}>
               <button
                 type="button"
