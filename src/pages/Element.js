@@ -104,7 +104,6 @@ const ElementColor = ({ element }) => {
         <>
           <div className="fs-icons fs-4">
             <Link
-              // to=""
               to={`/admin/value/${filterData[i]._id}`}
               className="text-dark fs-4 bg-transparent border-0 px-4"
             >

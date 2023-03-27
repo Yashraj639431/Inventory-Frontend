@@ -1,60 +1,60 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import warehouseService from "./warehouseService";
+import itemService from "./itemService";
 
-// Get all Warehouse
-export const getWarehouses = createAsyncThunk(
-  "warehouse/get-warehouses",
+// Get all Item
+export const getItem = createAsyncThunk(
+  "item/get-item",
   async (thunkAPI) => {
     try {
-      return await warehouseService.getWarehouse();
+      return await itemService.getItem();  
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Create a Warehouse
-export const createWarehouses = createAsyncThunk(
-  "warehouse/create-warehouse",
-  async (warehouseData, thunkAPI) => {
+// Create a Item
+export const createItem = createAsyncThunk(
+  "item/create-item",
+  async (itemData, thunkAPI) => {
     try {
-      return await warehouseService.createWarehouse(warehouseData);
+      return await itemService.createItem(itemData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Get a Warehouse
-export const getAWarehouses = createAsyncThunk(
-  "warehouse/get-awarehouse",
+// Get a Item
+export const getAItem = createAsyncThunk(
+  "item/get-aitem",
   async (id, thunkAPI) => {
     try {
-      return await warehouseService.getAWarehouse(id);
+      return await itemService.getAItem(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Update a Warehouse
-export const updateWarehouses = createAsyncThunk(
-  "warehouse/update-warehouse",
-  async (warehouseData, thunkAPI) => {
+// Update a Item
+export const updateItem = createAsyncThunk(
+  "item/update-item",
+  async (itemData, thunkAPI) => {
     try {
-      return await warehouseService.updateWarehouse(warehouseData);
+      return await itemService.updateItem(itemData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// Delete a Warehouse
-export const deleteWarehouses = createAsyncThunk(
-  "warehouse/delete-warehouse",
+// Delete a Item
+export const deleteItem = createAsyncThunk(
+  "item/delete-item",
   async (id, thunkAPI) => {
     try {
-      return await warehouseService.deleteWarehouse(id);
+      return await itemService.deleteItem(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -63,90 +63,90 @@ export const deleteWarehouses = createAsyncThunk(
 
 export const resetState = createAction("Reset_All");
 const initialState = {
-  warehouses: [],
+  items: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 
-export const warehouseSlice = createSlice({
-  name: "warehouses",
+export const categorySlice = createSlice({
+  name: "items",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getWarehouses.pending, (state) => {
+      .addCase(getItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getWarehouses.fulfilled, (state, action) => {
+      .addCase(getItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.warehouses = action.payload;
+        state.items = action.payload;
       })
-      .addCase(getWarehouses.rejected, (state, action) => {
+      .addCase(getItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createWarehouses.pending, (state) => {
+      .addCase(createItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createWarehouses.fulfilled, (state, action) => {
+      .addCase(createItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createdWarehouse = action.payload;
+        state.createdItem = action.payload;
       })
-      .addCase(createWarehouses.rejected, (state, action) => {
+      .addCase(createItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(getAWarehouses.pending, (state) => {
+      .addCase(getAItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAWarehouses.fulfilled, (state, action) => {
+      .addCase(getAItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.wareName = action.payload.title;
-        state.wareStatus = action.payload.status;
+        state.itemName = action.payload.title;
+        state.itemStatus = action.payload.status;
       })
-      .addCase(getAWarehouses.rejected, (state, action) => {
+      .addCase(getAItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(updateWarehouses.pending, (state) => {
+      .addCase(updateItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateWarehouses.fulfilled, (state, action) => {
+      .addCase(updateItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedWarehouse = action.payload;
+        state.updatedItem = action.payload;
       })
-      .addCase(updateWarehouses.rejected, (state, action) => {
+      .addCase(updateItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(deleteWarehouses.pending, (state) => {
+      .addCase(deleteItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteWarehouses.fulfilled, (state, action) => {
+      .addCase(deleteItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.deletedWarehouse = action.payload;
+        state.deletedItem = action.payload;
       })
-      .addCase(deleteWarehouses.rejected, (state, action) => {
+      .addCase(deleteItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -156,4 +156,4 @@ export const warehouseSlice = createSlice({
   },
 });
 
-export default warehouseSlice.reducer;
+export default categorySlice.reducer;
