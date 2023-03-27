@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import BreadCrum from "../components/BreadCrum";
@@ -49,15 +49,16 @@ const ElementPage = (props) => {
   };
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, []);
 
   const deleteValue = (e) => {
     dispatch(deleteValues(e));
     setOpen(false);
-    setTimeout(() => {
+    
       window.location.reload(false);
       dispatch(getValues());
-    }, 100);
+    
+    
   };
 
   const handleSubmit = async (e) => {
@@ -69,15 +70,16 @@ const ElementPage = (props) => {
       if (valId === undefined || valId === null) {
         url = `http://localhost:5000/api/value/${id}`;
         res = await axios.post(url, { title: elementValue });
+        fetchData();
       } else {
         let splittingId = id.split("?")[0];
         url = `http://localhost:5000/api/value/${splittingId}/${valId}`;
         res = await axios.put(url, {
           title: elementValue,
         });
+        fetchData();
       }
       console.log(res);
-      fetchData();
       setLoading(false);
     } catch (err) {
       console.log(err);

@@ -6,7 +6,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import MainLayout from "./components/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Element from "./pages/Element";
-import ElementValue from "./pages/ElementValue";
 import Category from "./pages/Category";
 import Items from "./pages/Item";
 import Warehouse from "./pages/Warehouse";
@@ -19,7 +18,6 @@ import ManageMember from "./pages/ManageMember";
 import AddPermission from "./pages/AddPermission";
 import ManagePermission from "./pages/ManagePermission";
 import Company from "./pages/Company";
-import PopModal from "./components/PopModal";
 import ElementPage from "./pages/ElementPage";
 
 function App() {
@@ -32,11 +30,12 @@ function App() {
         <Route path="admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="item" element={<Items />} />
-          <Route path="modal" element={<PopModal />} />
           <Route path="category" element={<Category />} />
           <Route path="warehouse" element={<Warehouse />} />
+          <Route path="warehouse/:id" element={<Warehouse />} />
           <Route path="element" element={<Element />} />
           <Route path="value/:id" element={<ElementPage />} />
+          <Route path="value/:id/:valId" element={<ElementPage />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="manage-product" element={<ManageProduct />} />
           <Route path="add-order" element={<AddOrder />} />

@@ -58,21 +58,21 @@ const ElementColor = ({ element }) => {
 
   const newElement = useSelector((state) => state.element);
   const { elementName, elementStatus } = newElement;
-  
+
   const showModal = (e) => {
     setOpen(true);
     setelementId(e);
   };
-  
+
   const hideModal = () => {
     setOpen(false);
   };
-  
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getElements());
   }, [dispatch]);
-  
+
   const elementState = useSelector((state) => state.element.elements);
   const filterData = elementState.filter((el) => {
     if (search === "") {
@@ -103,13 +103,13 @@ const ElementColor = ({ element }) => {
       action: (
         <>
           <div className="fs-icons fs-4">
-              <Link
-                // to=""
-                to={`/admin/value/${filterData[i]._id}`}
-                className="text-dark fs-4 bg-transparent border-0 px-4"
-              >
-                <AiFillFileAdd /> 
-              </Link>
+            <Link
+              // to=""
+              to={`/admin/value/${filterData[i]._id}`}
+              className="text-dark fs-4 bg-transparent border-0 px-4"
+            >
+              <AiFillFileAdd />
+            </Link>
 
             <Link to={`/admin/element/${filterData[i]._id}`}>
               <button
@@ -144,9 +144,7 @@ const ElementColor = ({ element }) => {
   const deleteElement = (e) => {
     dispatch(deleteElements(e));
     setOpen(false);
-    setTimeout(() => {
-      dispatch(getElements());
-    }, 100);
+    dispatch(getElements());
   };
 
   const formik = useFormik({
