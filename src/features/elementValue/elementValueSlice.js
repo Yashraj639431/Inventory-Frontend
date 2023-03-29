@@ -13,36 +13,12 @@ export const getValues = createAsyncThunk(
   }
 );
 
-// Create a Value
-export const createValues = createAsyncThunk(
-  "value/create-value",
-  async (valueData, thunkAPI) => {
-    try {
-      return await valueService.createValue(valueData);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 // Get a Value
 export const getAValues = createAsyncThunk(
   "value/get-aValue",
   async (id, thunkAPI) => {
     try {
       return await valueService.getAValue(id);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-// Update a Value
-export const updateValues = createAsyncThunk(
-  "updateValues/update-value",
-  async (value, thunkAPI) => {
-    try {
-      return await valueService.updateValue(value);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -90,21 +66,6 @@ export const elementColorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createValues.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(createValues.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.createdColor = action.payload;
-      })
-      .addCase(createValues.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.error;
-      })
       .addCase(getAValues.pending, (state) => {
         state.isLoading = true;
       })
@@ -115,21 +76,6 @@ export const elementColorSlice = createSlice({
         state.colorName = action.payload.title;
       })
       .addCase(getAValues.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.error;
-      })
-      .addCase(updateValues.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updateValues.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.updatedColor = action.payload;
-      })
-      .addCase(updateValues.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

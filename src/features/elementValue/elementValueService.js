@@ -8,25 +8,9 @@ const getValue = async (id) => {
   return response.data;
 };
 
-// Create a Value
-const createValue = async (value) => {
-  const response = await axios.post(`${base_url}value`, value, config);
-  return response.data;
-};
-
 // Get a Value
 const getAValue = async (id) => {
   const response = await axios.get(`${base_url}value/${id}`, config);
-  return response.data;
-};
-
-// Update a Value
-const updateValue = async (value) => {
-  const response = await axios.put(
-    `${base_url}value${value.id}`,
-    { title: value.valueData.title },
-    config
-  );
   return response.data;
 };
 
@@ -38,9 +22,7 @@ const deleteValue = async (id) => {
 
 const valueService = {
   getValue,
-  createValue,
   getAValue,
-  updateValue,
   deleteValue,
 };
 

@@ -11,7 +11,7 @@ import {
   deleteValues,
   resetState,
 } from "../features/elementValue/elementValueSlice";
-const ElementPage = (props) => {
+const ElementPage = () => {
   const dispatch = useDispatch();
   const id = document.URL.split("/")[5];
   const [open, setOpen] = useState(false);
@@ -149,7 +149,7 @@ const ElementPage = (props) => {
                     <thead>
                       <tr>
                         <th scope="col">Element Value</th>
-                        <th scope="col"></th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody

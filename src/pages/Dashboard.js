@@ -16,6 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <>
       <div className="dashboard-layout">
@@ -45,7 +46,7 @@ const Dashboard = () => {
             <div className="box col-lg-3 col-xs-6">
               <div className="custom-img small-box bg-teal">
                 <div className="inner">
-                  <h3>0</h3>
+                  <h3>{elemCount.category}</h3>
                   <h4>
                     <b>Total Category</b>
                   </h4>
@@ -62,7 +63,7 @@ const Dashboard = () => {
             <div className="box col-lg-3 col-xs-6">
               <div className="custom-img small-box bg-yellow">
                 <div className="inner">
-                  <h3>{elemCount}</h3>
+                  <h3>{elemCount.element}</h3>
                   <h4>
                     <b>Total Elements </b>
                   </h4>
@@ -166,7 +167,7 @@ const Dashboard = () => {
             <div className="box col-lg-3 col-xs-6">
               <div className="custom-img small-box bg-red">
                 <div className="inner">
-                  <h3>0</h3>
+                  <h3>{elemCount.warehouse}</h3>
                   <h4>
                     <b>Total Warehouse</b>
                   </h4>
