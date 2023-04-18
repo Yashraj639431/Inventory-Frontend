@@ -5,6 +5,7 @@ import valueReducer from "../features/elementValue/elementValueSlice";
 import warehouseReducer from "../features/warehouse/warehouseSlice";
 import categoryReducer from "../features/category/categorySlice";
 import itemReducer from "../features/item/itemSlice";
+import productReducer from "../features/product/productSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     warehouse: warehouseReducer,
     category: categoryReducer,
     item: itemReducer,
+    product: productReducer,
   },
 });

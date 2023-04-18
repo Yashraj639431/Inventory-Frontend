@@ -137,7 +137,6 @@ const ElementPage = () => {
                       id="form1"
                       className="form-control"
                       placeholder="Search"
-                      //   onChange={(e) => setSearch(e.target.value.toLowerCase())}
                     />
                   </div>
                   <button type="button" className="search-btn btn btn-primary">

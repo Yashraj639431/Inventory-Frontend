@@ -39,7 +39,9 @@ function App() {
           <Route path="value/:id" element={<ElementPage />} />
           <Route path="value/:id/:valId" element={<ElementPage />} />
           <Route path="add-product" element={<AddProduct />} />
+          <Route path="add-product/:id" element={<AddProduct />} />
           <Route path="manage-product" element={<ManageProduct />} />
+          <Route path="manage-product/:id" element={<ManageProduct />} />
           <Route path="add-order" element={<AddOrder />} />
           <Route path="manage-order" element={<ManageOrder />} />
           <Route path="add-member" element={<AddMember />} />

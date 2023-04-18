@@ -45,7 +45,8 @@ const initialState = {
   message: "",
 };
 
-export const elementColorSlice = createSlice({
+
+export const elementValueSlice = createSlice({
   name: "values",
   initialState,
   reducers: {},
@@ -73,7 +74,7 @@ export const elementColorSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.colorName = action.payload.title;
+        state.valueName = action.payload.title;
       })
       .addCase(getAValues.rejected, (state, action) => {
         state.isLoading = false;
@@ -100,4 +101,4 @@ export const elementColorSlice = createSlice({
   },
 });
 
-export default elementColorSlice.reducer;
+export default elementValueSlice.reducer;
